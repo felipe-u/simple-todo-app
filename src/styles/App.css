@@ -1,0 +1,17 @@
+main {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  gap: 15px;
+  padding-top: 50px;
+}
+
+section {
+  width: 600px;
+}
+
+.filter-sec {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
