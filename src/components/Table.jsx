@@ -1,6 +1,6 @@
 import '../styles/Table.css'
 
-export function Table() {
+export function Table({ tasks }) {
   return (
     <>
       <table>
@@ -14,35 +14,27 @@ export function Table() {
           </tr>
         </thead>
 
-        <tbody>
-          <tr>
-            <td>12</td>
-            <td>Design new brand for my mom</td>
-            <td>Completed</td>
-            <td>456</td>
-            <td>
-              <button>...</button>
-            </td>
-          </tr>
-          <tr>
-            <td>22</td>
-            <td>Build some space stuff</td>
-            <td>Pending</td>
-            <td>456</td>
-            <td>
-              <button>...</button>
-            </td>
-          </tr>
-          <tr>
-            <td>66</td>
-            <td>Buy some food for my cat</td>
-            <td>Pending</td>
-            <td>789</td>
-            <td>
-              <button>...</button>
-            </td>
-          </tr>
-        </tbody>
+        {tasks.length > 0 ? (
+          <tbody>
+            {tasks.map((task) => (
+              <tr key={task.id}>
+                <td>{task.id}</td>
+                <td>{task.todo}</td>
+                <td>{task.completed ? 'Completed' : 'Pending'}</td>
+                <td>{task.userId}</td>
+                <td>
+                  <button>...</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        ) : (
+          <tbody className='no-results'>
+            <tr>
+              <td>No results</td>
+            </tr>
+          </tbody>
+        )}
       </table>
 
       <div className='pagination-container'>
