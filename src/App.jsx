@@ -5,17 +5,25 @@ import { useTasks } from './hooks/useTasks'
 import { Pagination } from './components/Pagination'
 
 function App() {
-  const { tasks, limit, setLimit, numberOfPages, page, nextPage, prevPage } =
-    useTasks()
+  const {
+    tasksToShow,
+    limit,
+    setLimit,
+    numberOfPages,
+    page,
+    nextPage,
+    prevPage,
+    getTaskByTitleOrUserId,
+  } = useTasks()
 
   return (
     <main>
       <section className='filter-sec'>
-        <Filter />
+        <Filter getTaskByTitleOrUserId={getTaskByTitleOrUserId} />
         <button className='primary-btn'>New Task</button>
       </section>
       <section>
-        <Table tasks={tasks} />
+        <Table tasks={tasksToShow} />
       </section>
       <section>
         <Pagination

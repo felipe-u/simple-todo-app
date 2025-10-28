@@ -1,9 +1,8 @@
 import { GET_ALL_TASKS } from '../constants/api'
 
-export async function getAllTasks(limit, page) {
-  const skip = Number(limit) * (page - 1)
+export async function getAllTasks() {
   try {
-    const res = await fetch(`${GET_ALL_TASKS}?limit=${limit}&skip=${skip}`)
+    const res = await fetch(`${GET_ALL_TASKS}?limit=0`)
     if (!res.ok) {
       throw new Error('No tasks found')
     }
