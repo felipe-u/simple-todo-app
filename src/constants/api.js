@@ -1,1 +1,1 @@
-export const GET_ALL_TODOS = 'https://dummyjson.com/todos'
+export const GET_ALL_TASKS = 'https://dummyjson.com/todos'

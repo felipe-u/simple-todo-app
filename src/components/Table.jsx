@@ -36,24 +36,6 @@ export function Table({ tasks }) {
           </tbody>
         )}
       </table>
-
-      <div className='pagination-container'>
-        <div className='rows-per-page'>
-          <p>Rows per page</p>
-          <select name='rows' id='rows'>
-            <option value='10'>10</option>
-            <option value='25'>25</option>
-            <option value='50'>50</option>
-          </select>
-        </div>
-        <div className='pages'>
-          <p>Pages 1 of 4</p>
-          <div className='pages-btn-container'>
-            <button>◀</button>
-            <button>▶</button>
-          </div>
-        </div>
-      </div>
     </>
   )
 }
