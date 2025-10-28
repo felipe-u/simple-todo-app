@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react'
 import '../styles/Filter.css'
+import { Drop } from './Drop'
 
-export function Filter({ getTaskByTitleOrUserId }) {
+export function Filter({ onFilterTasks }) {
   const [searchBar, setSearchBar] = useState({ show: false, mode: 'title' })
+  const [showDrop, setShowDrop] = useState(false)
   const queryRef = useRef('')
 
   const showSearchBar = (mode) => {
@@ -11,7 +13,16 @@ export function Filter({ getTaskByTitleOrUserId }) {
 
   const hideSearchBar = () => {
     setSearchBar((prev) => ({ ...prev, show: false }))
-    getTaskByTitleOrUserId('', null)
+    onFilterTasks('', null)
+  }
+
+  const toggleDrop = () => {
+    setShowDrop(!showDrop)
+  }
+
+  const onFilterByStatus = (filter) => {
+    onFilterTasks('', filter)
+    toggleDrop()
   }
 
   return (
@@ -27,7 +38,7 @@ export function Filter({ getTaskByTitleOrUserId }) {
             ref={queryRef}
             onKeyDown={(e) =>
               e.key === 'Enter' &&
-              getTaskByTitleOrUserId(queryRef.current.value, searchBar.mode)
+              onFilterTasks(queryRef.current.value, searchBar.mode)
             }
           />
         </div>
@@ -48,7 +59,17 @@ export function Filter({ getTaskByTitleOrUserId }) {
         </div>
       )}
 
-      <button>Status</button>
+      <div className='status-btn-container'>
+        <button onClick={toggleDrop}>Status</button>
+        {showDrop && (
+          <div className='status-drop-container'>
+            <Drop>
+              <p onClick={() => onFilterByStatus('completed')}>Completed</p>
+              <p onClick={() => onFilterByStatus('pending')}>Pending</p>
+            </Drop>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

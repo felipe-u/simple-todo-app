@@ -4,3 +4,14 @@
   justify-content: space-between;
   width: 250px;
 }
+
+.status-btn-container {
+  position: relative;
+}
+
+.status-drop-container {
+  display: block;
+  position: absolute;
+  top: -20px;
+  left: 44px;
+}

@@ -13,13 +13,13 @@ function App() {
     page,
     nextPage,
     prevPage,
-    getTaskByTitleOrUserId,
+    onFilterTasks,
   } = useTasks()
 
   return (
     <main>
       <section className='filter-sec'>
-        <Filter getTaskByTitleOrUserId={getTaskByTitleOrUserId} />
+        <Filter onFilterTasks={onFilterTasks} />
         <button className='primary-btn'>New Task</button>
       </section>
       <section>

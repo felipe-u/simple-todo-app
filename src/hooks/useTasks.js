@@ -47,6 +47,14 @@ export function useTasks() {
       results = results.filter((task) => task.userId === Number(query))
     }
 
+    if (filterMode === 'completed') {
+      results = results.filter((task) => task.completed)
+    }
+
+    if (filterMode === 'pending') {
+      results = results.filter((task) => !task.completed)
+    }
+
     setFilteredTasks(results)
     setPage(1)
   }, [allTasks, filterMode, query])
@@ -81,7 +89,7 @@ export function useTasks() {
     }
   }
 
-  const getTaskByTitleOrUserId = (query, mode) => {
+  const onFilterTasks = (query, mode) => {
     setQuery(query)
     setFilterMode(mode)
   }
@@ -94,7 +102,7 @@ export function useTasks() {
     nextPage,
     prevPage,
     numberOfPages,
-    getTaskByTitleOrUserId,
+    onFilterTasks,
     loading,
     error,
   }
