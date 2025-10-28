@@ -10,8 +10,8 @@ export function useTasks() {
   const [numberOfPages, setNumberOfPages] = useState(0)
   const [page, setPage] = useState(1)
 
-  const [filterMode, setFilterMode] = useState('')
-  const [query, setQuery] = useState('')
+  const [searchFilter, setSearchFilter] = useState({ mode: '', query: '' })
+  const [statusFilter, setStatusFilter] = useState('')
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -37,27 +37,29 @@ export function useTasks() {
   useEffect(() => {
     let results = [...allTasks]
 
-    if (filterMode === 'title' && query) {
+    if (searchFilter.mode === 'title' && searchFilter.query) {
       results = results.filter((task) =>
-        task.todo.toLowerCase().includes(query.toLowerCase())
+        task.todo.toLowerCase().includes(searchFilter.query.toLowerCase())
       )
     }
 
-    if (filterMode === 'user' && query) {
-      results = results.filter((task) => task.userId === Number(query))
+    if (searchFilter.mode === 'user' && searchFilter.query) {
+      results = results.filter(
+        (task) => task.userId === Number(searchFilter.query)
+      )
     }
 
-    if (filterMode === 'completed') {
+    if (statusFilter === 'completed') {
       results = results.filter((task) => task.completed)
     }
 
-    if (filterMode === 'pending') {
+    if (statusFilter === 'pending') {
       results = results.filter((task) => !task.completed)
     }
 
     setFilteredTasks(results)
     setPage(1)
-  }, [allTasks, filterMode, query])
+  }, [allTasks, searchFilter, statusFilter])
 
   useEffect(() => {
     setNumberOfPages(Math.ceil(filteredTasks.length / limit))
@@ -89,9 +91,12 @@ export function useTasks() {
     }
   }
 
-  const onFilterTasks = (query, mode) => {
-    setQuery(query)
-    setFilterMode(mode)
+  const onSearchTasks = (mode, query) => {
+    setSearchFilter({ mode, query })
+  }
+
+  const onFilterTasksByStatus = (status) => {
+    setStatusFilter(status)
   }
 
   return {
@@ -102,7 +107,9 @@ export function useTasks() {
     nextPage,
     prevPage,
     numberOfPages,
-    onFilterTasks,
+    onSearchTasks,
+    onFilterTasksByStatus,
+    statusFilter,
     loading,
     error,
   }
