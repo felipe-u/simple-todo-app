@@ -38,13 +38,13 @@ export function Table({ tasks, onEditTask, onDeleteTask }) {
     setDropMenu({ show: false, taskId: '' })
   }
 
-  const onEditTask2 = (id, title, status, userId) => {
+  const openEditTaskForm = (id, title, status, userId) => {
     setTaskToEdit({ id, title, status, userId })
     setShowTaskForm(true)
     hideDropMenu()
   }
 
-  const onDeleteTask2 = (taskId) => {
+  const handleDeleteClick = (taskId) => {
     if (confirm('Are you sure you want to delete this task?')) {
       onDeleteTask(taskId)
       hideDropMenu()
@@ -80,7 +80,7 @@ export function Table({ tasks, onEditTask, onDeleteTask }) {
                         <Drop>
                           <p
                             onClick={() =>
-                              onEditTask2(
+                              openEditTaskForm(
                                 task.id,
                                 task.todo,
                                 task.completed,
@@ -90,7 +90,9 @@ export function Table({ tasks, onEditTask, onDeleteTask }) {
                           >
                             Edit
                           </p>
-                          <p onClick={() => onDeleteTask2(task.id)}>Delete</p>
+                          <p onClick={() => handleDeleteClick(task.id)}>
+                            Delete
+                          </p>
                         </Drop>
                       </div>
                     )}
