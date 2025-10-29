@@ -1,25 +1,47 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../styles/TaskForm.css'
 
-export default function TaskForm({
+export function TaskForm({
   editMode,
   taskToEdit,
   onCreateNewTask,
   setShowTaskForm,
+  onEditTask,
 }) {
-  const [form, setForm] = useState({ title: '', status: 'pending' })
+  const [form, setForm] = useState({
+    id: '',
+    title: '',
+    status: 'pending',
+    userId: '',
+  })
+
+  useEffect(() => {
+    if (editMode) {
+      const formattedStatus = taskToEdit.status ? 'completed' : 'pending'
+      setForm({
+        id: taskToEdit.id,
+        title: taskToEdit.title,
+        status: formattedStatus,
+        userId: taskToEdit.userId,
+      })
+    }
+  }, [editMode, taskToEdit])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (form.title === '') return
-    await onCreateNewTask(form)
-    setForm({ title: '', status: 'pending' })
+    if (form.title === '' || form.userId === '') return
+    if (editMode) {
+      await onEditTask(form)
+    } else {
+      await onCreateNewTask(form)
+    }
+    setForm({ id: '', title: '', status: 'pending', userId: '' })
     setShowTaskForm(false)
   }
 
   return (
     <div className='task-form-container' onClick={(e) => e.stopPropagation()}>
-      <h2>Add a task</h2>
+      <h2>{editMode ? 'Edit' : 'Add'} a task</h2>
       <form className='task-form' onSubmit={handleSubmit}>
         <div className='input-container'>
           <label htmlFor='title'>Title</label>
@@ -49,6 +71,23 @@ export default function TaskForm({
             <option value='completed'>Completed</option>
             <option value='pending'>Pending</option>
           </select>
+        </div>
+
+        <hr />
+        <div className='input-container'>
+          <label htmlFor='userId'>User Id</label>
+          <input
+            type='number'
+            name='userId'
+            id='userId'
+            min={0}
+            max={3000}
+            required
+            value={form.userId}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, userId: e.target.value }))
+            }
+          />
         </div>
 
         <div className='btn-container'>

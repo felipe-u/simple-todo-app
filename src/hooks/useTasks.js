@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { addNewTask, getAllTasks } from '../services/tasks'
+import { addNewTask, editTask, getAllTasks } from '../services/tasks'
 
 export function useTasks() {
   const [allTasks, setAllTasks] = useState([])
@@ -102,8 +102,50 @@ export function useTasks() {
   const onCreateNewTask = async (form) => {
     setLoading(true)
     try {
-      const newTask = await addNewTask(form)
+      const tempId = Math.floor(Math.random() * (999 - 255 + 1)) + 255
+      const newTask = {
+        id: tempId,
+        todo: form.title,
+        completed: form.status === 'completed',
+        userId: form.userId,
+        _local: true,
+      }
+      // Only simulation (Fake API)
+      await addNewTask(form)
       setAllTasks((prev) => [newTask, ...prev])
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // is Local? -> client-side update
+  // is not Local? -> server-side uptade
+  const onEditTask = async (form) => {
+    const isLocal = allTasks.find((task) => task.id === form.id)?._local
+
+    if (isLocal) {
+      setAllTasks((prev) =>
+        prev.map((task) =>
+          task.id === form.id
+            ? {
+                ...task,
+                todo: form.title,
+                completed: form.status === 'completed',
+                userId: form.userId,
+              }
+            : task
+        )
+      )
+      return
+    }
+    setLoading(true)
+    try {
+      const editedTask = await editTask(form)
+      setAllTasks((prev) =>
+        prev.map((task) => (task.id === form.id ? editedTask : task))
+      )
     } catch (error) {
       setError(error.message)
     } finally {
@@ -123,6 +165,7 @@ export function useTasks() {
     onFilterTasksByStatus,
     statusFilter,
     onCreateNewTask,
+    onEditTask,
     loading,
     error,
   }

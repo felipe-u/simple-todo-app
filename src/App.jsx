@@ -3,7 +3,7 @@ import { Filter } from './components/Filter'
 import { Table } from './components/Table'
 import { useTasks } from './hooks/useTasks'
 import { Pagination } from './components/Pagination'
-import TaskForm from './components/TaskForm'
+import { TaskForm } from './components/TaskForm'
 import { useState } from 'react'
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
     onFilterTasksByStatus,
     statusFilter,
     onCreateNewTask,
+    onEditTask,
   } = useTasks()
   const [showTaskForm, setShowTaskForm] = useState(false)
 
@@ -36,7 +37,7 @@ function App() {
       </section>
 
       <section>
-        <Table tasks={tasksToShow} />
+        <Table tasks={tasksToShow} onEditTask={onEditTask} />
       </section>
 
       <section>

@@ -10,14 +10,25 @@ table {
   padding: 25px 0;
 }
 
-.rows-per-page, .pages {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.rows-per-page,
+.pages {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .pages-btn-container {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.drop-menu-td {
+  position: relative;
+}
+
+.drop-container {
+  position: absolute;
+  top: -10px;
+  left: 12px;
 }
