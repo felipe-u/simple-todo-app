@@ -29,7 +29,7 @@ export function TaskForm({
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (form.title === '' || form.userId === '') return
+    if (!form.title || !form.userId) return
     if (editMode) {
       await onEditTask(form)
     } else {
@@ -85,7 +85,7 @@ export function TaskForm({
             required
             value={form.userId}
             onChange={(e) =>
-              setForm((prev) => ({ ...prev, userId: e.target.value }))
+              setForm((prev) => ({ ...prev, userId: Number(e.target.value) }))
             }
           />
         </div>
