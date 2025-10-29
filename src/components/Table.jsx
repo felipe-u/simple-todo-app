@@ -3,7 +3,7 @@ import { Drop } from '../components/Drop'
 import { TaskForm } from '../components/TaskForm.jsx'
 import { useEffect, useRef, useState } from 'react'
 
-export function Table({ tasks, onEditTask }) {
+export function Table({ tasks, onEditTask, onDeleteTask }) {
   const [dropMenu, setDropMenu] = useState({ show: false, taskId: '' })
   const [showTaskForm, setShowTaskForm] = useState(false)
   const [taskToEdit, setTaskToEdit] = useState({
@@ -44,9 +44,9 @@ export function Table({ tasks, onEditTask }) {
     hideDropMenu()
   }
 
-  const onDeleteTask = (taskId) => {
+  const onDeleteTask2 = (taskId) => {
     if (confirm('Are you sure you want to delete this task?')) {
-      console.log(`Deleting task: ${taskId}`)
+      onDeleteTask(taskId)
       hideDropMenu()
     }
   }
@@ -90,7 +90,7 @@ export function Table({ tasks, onEditTask }) {
                           >
                             Edit
                           </p>
-                          <p onClick={() => onDeleteTask(task.id)}>Delete</p>
+                          <p onClick={() => onDeleteTask2(task.id)}>Delete</p>
                         </Drop>
                       </div>
                     )}

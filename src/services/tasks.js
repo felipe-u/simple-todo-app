@@ -30,7 +30,7 @@ export async function addNewTask(form) {
     const data = await res.json()
     return data
   } catch (error) {
-    throw new Error(`Error creating task: ${error.message}`)
+    throw new Error(`Error creating task: ${error?.message}`)
   }
 }
 
@@ -51,6 +51,21 @@ export async function editTask(form) {
     const data = await res.json()
     return data
   } catch (error) {
-    throw new Error(`Error editing task: ${error.message}`)
+    throw new Error(`Error editing task: ${error?.message}`)
+  }
+}
+
+export async function deleteTask(taskId) {
+  try {
+    const res = await fetch(`${ENDPOINT_TASKS}/${taskId}`, {
+      method: 'DELETE',
+    })
+    if (!res.ok) {
+      throw new Error('Error deleting task')
+    }
+    const data = await res.json()
+    return data
+  } catch (error) {
+    throw new Error(`Error deleting task: ${error?.message}`)
   }
 }

@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { addNewTask, editTask, getAllTasks } from '../services/tasks'
+import {
+  addNewTask,
+  deleteTask,
+  editTask,
+  getAllTasks,
+} from '../services/tasks'
 
 export function useTasks() {
   const [allTasks, setAllTasks] = useState([])
@@ -121,7 +126,7 @@ export function useTasks() {
   }
 
   // is Local? -> client-side update
-  // is not Local? -> server-side uptade
+  // is not Local? -> server-side update
   const onEditTask = async (form) => {
     const isLocal = allTasks.find((task) => task.id === form.id)?._local
 
@@ -153,6 +158,28 @@ export function useTasks() {
     }
   }
 
+  // is Local? -> client-side delete
+  // is not Local? -> server-side delete
+  const onDeleteTask = async (taskId) => {
+    const isLocal = allTasks.find((task) => task.id === taskId)?._local
+
+    if (isLocal) {
+      setAllTasks((prev) => prev.filter((task) => task.id !== taskId))
+      return
+    }
+
+    setLoading(true)
+    try {
+      const deletedTask = await deleteTask(taskId)
+      const { id } = deletedTask
+      setAllTasks((prev) => prev.filter((task) => task.id !== id))
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return {
     tasksToShow,
     limit,
@@ -166,6 +193,7 @@ export function useTasks() {
     statusFilter,
     onCreateNewTask,
     onEditTask,
+    onDeleteTask,
     loading,
     error,
   }

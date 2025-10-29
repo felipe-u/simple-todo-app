@@ -20,6 +20,7 @@ function App() {
     statusFilter,
     onCreateNewTask,
     onEditTask,
+    onDeleteTask,
   } = useTasks()
   const [showTaskForm, setShowTaskForm] = useState(false)
 
@@ -37,7 +38,11 @@ function App() {
       </section>
 
       <section>
-        <Table tasks={tasksToShow} onEditTask={onEditTask} />
+        <Table
+          tasks={tasksToShow}
+          onEditTask={onEditTask}
+          onDeleteTask={onDeleteTask}
+        />
       </section>
 
       <section>
