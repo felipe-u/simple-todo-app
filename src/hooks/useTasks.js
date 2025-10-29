@@ -1,27 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   addNewTask,
   deleteTask,
   editTask,
   getAllTasks,
 } from '../services/tasks'
+import { usePagination } from './usePagination'
+import { useFilters } from './useFilters'
 
 export function useTasks() {
   const [allTasks, setAllTasks] = useState([])
-  const [filteredTasks, setFilteredTasks] = useState([])
-  const [tasksToShow, setTasksToShow] = useState([])
-
-  const [limit, setLimit] = useState(25)
-  const [numberOfPages, setNumberOfPages] = useState(0)
-  const [page, setPage] = useState(1)
-
-  const [searchFilter, setSearchFilter] = useState({ mode: '', query: '' })
-  const [statusFilter, setStatusFilter] = useState('')
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const prevLimit = useRef(limit)
+  const { filteredTasks, setSearchFilter, setStatusFilter, statusFilter } =
+    useFilters(allTasks)
+
+  const { limit, setLimit, numberOfPages, page, setPage, paginatedTasks } =
+    usePagination(filteredTasks)
 
   useEffect(() => {
     const fetchAllTasks = async () => {
@@ -29,7 +26,6 @@ export function useTasks() {
       try {
         const { todos } = await getAllTasks()
         setAllTasks(todos)
-        setFilteredTasks(todos)
       } catch (error) {
         setError(error.message)
       } finally {
@@ -40,49 +36,8 @@ export function useTasks() {
   }, [])
 
   useEffect(() => {
-    let results = [...allTasks]
-
-    if (searchFilter.mode === 'title' && searchFilter.query) {
-      results = results.filter((task) =>
-        task.todo.toLowerCase().includes(searchFilter.query.toLowerCase())
-      )
-    }
-
-    if (searchFilter.mode === 'user' && searchFilter.query) {
-      results = results.filter(
-        (task) => task.userId === Number(searchFilter.query)
-      )
-    }
-
-    if (statusFilter === 'completed') {
-      results = results.filter((task) => task.completed)
-    }
-
-    if (statusFilter === 'pending') {
-      results = results.filter((task) => !task.completed)
-    }
-
-    setFilteredTasks(results)
     setPage(1)
-  }, [allTasks, searchFilter, statusFilter])
-
-  useEffect(() => {
-    setNumberOfPages(Math.ceil(filteredTasks.length / limit))
-    const start = limit * (page - 1)
-    const end = limit * page
-    setTasksToShow(filteredTasks.slice(start, end))
-  }, [filteredTasks, limit, page])
-
-  useEffect(() => {
-    if (prevLimit.current !== limit) {
-      const oldLimit = prevLimit.current
-      const oldPage = page
-      const newPage = Math.ceil(((oldPage - 1) * oldLimit + 1) / limit)
-      setPage(Math.min(Math.max(newPage, 1), numberOfPages || 1))
-      prevLimit.current = limit
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [limit])
+  }, [filteredTasks, setPage])
 
   const nextPage = () => {
     if (page < numberOfPages) {
@@ -181,7 +136,7 @@ export function useTasks() {
   }
 
   return {
-    tasksToShow,
+    paginatedTasks,
     limit,
     setLimit,
     page,

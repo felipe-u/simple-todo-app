@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 function App() {
   const {
-    tasksToShow,
+    paginatedTasks,
     limit,
     setLimit,
     numberOfPages,
@@ -39,7 +39,7 @@ function App() {
 
       <section>
         <Table
-          tasks={tasksToShow}
+          tasks={paginatedTasks}
           onEditTask={onEditTask}
           onDeleteTask={onDeleteTask}
         />
