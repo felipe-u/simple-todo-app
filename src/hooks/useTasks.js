@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { getAllTasks } from '../services/tasks'
+import { addNewTask, getAllTasks } from '../services/tasks'
 
 export function useTasks() {
   const [allTasks, setAllTasks] = useState([])
@@ -99,6 +99,18 @@ export function useTasks() {
     setStatusFilter(status)
   }
 
+  const onCreateNewTask = async (form) => {
+    setLoading(true)
+    try {
+      const newTask = await addNewTask(form)
+      setAllTasks((prev) => [newTask, ...prev])
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return {
     tasksToShow,
     limit,
@@ -110,6 +122,7 @@ export function useTasks() {
     onSearchTasks,
     onFilterTasksByStatus,
     statusFilter,
+    onCreateNewTask,
     loading,
     error,
   }

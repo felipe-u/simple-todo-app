@@ -3,6 +3,8 @@ import { Filter } from './components/Filter'
 import { Table } from './components/Table'
 import { useTasks } from './hooks/useTasks'
 import { Pagination } from './components/Pagination'
+import TaskForm from './components/TaskForm'
+import { useState } from 'react'
 
 function App() {
   const {
@@ -16,7 +18,9 @@ function App() {
     onSearchTasks,
     onFilterTasksByStatus,
     statusFilter,
+    onCreateNewTask,
   } = useTasks()
+  const [showTaskForm, setShowTaskForm] = useState(false)
 
   return (
     <main>
@@ -26,11 +30,15 @@ function App() {
           onFilterTasksByStatus={onFilterTasksByStatus}
           statusFilter={statusFilter}
         />
-        <button className='primary-btn'>New Task</button>
+        <button className='primary-btn' onClick={() => setShowTaskForm(true)}>
+          New Task
+        </button>
       </section>
+
       <section>
         <Table tasks={tasksToShow} />
       </section>
+
       <section>
         <Pagination
           limit={limit}
@@ -41,6 +49,15 @@ function App() {
           numberOfPages={numberOfPages}
         />
       </section>
+
+      {showTaskForm && (
+        <div className='task-form-modal' onClick={() => setShowTaskForm(false)}>
+          <TaskForm
+            onCreateNewTask={onCreateNewTask}
+            setShowTaskForm={setShowTaskForm}
+          />
+        </div>
+      )}
     </main>
   )
 }

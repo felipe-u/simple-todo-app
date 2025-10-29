@@ -1,0 +1,63 @@
+import { useState } from 'react'
+import '../styles/TaskForm.css'
+
+export default function TaskForm({
+  editMode,
+  taskToEdit,
+  onCreateNewTask,
+  setShowTaskForm,
+}) {
+  const [form, setForm] = useState({ title: '', status: 'pending' })
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (form.title === '') return
+    await onCreateNewTask(form)
+    setForm({ title: '', status: 'pending' })
+    setShowTaskForm(false)
+  }
+
+  return (
+    <div className='task-form-container' onClick={(e) => e.stopPropagation()}>
+      <h2>Add a task</h2>
+      <form className='task-form' onSubmit={handleSubmit}>
+        <div className='input-container'>
+          <label htmlFor='title'>Title</label>
+          <input
+            type='text'
+            name='title'
+            id='title'
+            placeholder='Practice React, Watch new series...'
+            required
+            value={form.title}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, title: e.target.value }))
+            }
+          />
+        </div>
+
+        <div className='input-container'>
+          <label htmlFor='status'>Status</label>
+          <select
+            name='status'
+            id='status'
+            value={form.status}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, status: e.target.value }))
+            }
+          >
+            <option value='completed'>Completed</option>
+            <option value='pending'>Pending</option>
+          </select>
+        </div>
+
+        <div className='btn-container'>
+          <button>Submit</button>
+          <button type='button' onClick={() => setShowTaskForm(false)}>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  )
+}
