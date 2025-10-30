@@ -7,7 +7,11 @@ import { DotsIcon } from './Icons.jsx'
 
 export function Table() {
   const { paginatedTasks: tasks, onDeleteTask } = useTasks()
-  const [dropMenu, setDropMenu] = useState({ show: false, taskId: '' })
+  const [dropMenu, setDropMenu] = useState({
+    show: false,
+    taskId: '',
+    position: 'bottom',
+  })
   const [showTaskForm, setShowTaskForm] = useState(false)
   const [taskToEdit, setTaskToEdit] = useState({
     id: '',
@@ -33,12 +37,22 @@ export function Table() {
     }
   }, [dropMenu.show])
 
-  const showDropMenu = (taskId) => {
-    setDropMenu({ show: true, taskId: taskId })
+  const showDropMenu = (taskId, btnEl) => {
+    if (!btnEl) return
+
+    const rect = btnEl.getBoundingClientRect()
+    const spaceBelow = window.innerHeight - rect.bottom
+    const shouldOpenUp = spaceBelow < 120
+
+    setDropMenu({
+      show: true,
+      taskId: taskId,
+      position: shouldOpenUp ? 'top' : 'bottom',
+    })
   }
 
   const hideDropMenu = () => {
-    setDropMenu({ show: false, taskId: '' })
+    setDropMenu((prev) => ({ ...prev, show: false, taskId: '' }))
   }
 
   const openEditTaskForm = (id, title, status, userId) => {
@@ -81,11 +95,21 @@ export function Table() {
                 <td>{task.userId}</td>
                 <td>
                   <div className='drop-menu-td'>
-                    <button className='options-btn' onClick={() => showDropMenu(task.id)}>
+                    <button
+                      className='options-btn'
+                      onClick={(e) => showDropMenu(task.id, e.currentTarget)}
+                    >
                       <DotsIcon />
                     </button>
                     {dropMenu.show && dropMenu.taskId === task.id && (
-                      <div ref={dropRef} className='drop-menu-container'>
+                      <div
+                        ref={dropRef}
+                        className={`drop-menu-container ${
+                          dropMenu.position === 'top'
+                            ? 'drop-top'
+                            : 'drop-bottom'
+                        }`}
+                      >
                         <Drop>
                           <p
                             onClick={() =>
@@ -99,7 +123,8 @@ export function Table() {
                           >
                             Edit
                           </p>
-                          <p onClick={() => handleDeleteClick(task.id)}>
+                          <hr />
+                          <p className='red-p' onClick={() => handleDeleteClick(task.id)}>
                             Delete
                           </p>
                         </Drop>

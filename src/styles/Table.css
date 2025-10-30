@@ -74,6 +74,13 @@ tr:hover {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(-78px, 27px);
   z-index: 10;
+}
+
+.drop-bottom {
+  transform: translate(-78px, 27px);
+}
+
+.drop-top {
+  transform: translate(-78px, -100px);
 }
