@@ -70,8 +70,10 @@ tr:hover {
   position: relative;
 }
 
-.drop-container {
+.drop-menu-container {
   position: absolute;
-  top: -10px;
-  left: 12px;
+  top: 0;
+  left: 0;
+  transform: translate(-78px, 27px);
+  z-index: 10;
 }

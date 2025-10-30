@@ -1,5 +1,6 @@
 import '../styles/Pagination.css'
 import { useTasks } from '../hooks/useTasks'
+import { NextPageIcon, PrevPageIcon } from './Icons'
 
 export function Pagination() {
   const { limit, setLimit, numberOfPages, page, nextPage, prevPage } =
@@ -24,8 +25,12 @@ export function Pagination() {
           Pages {page} of {numberOfPages}
         </p>
         <div className='pages-btn-container'>
-          <button onClick={prevPage}>◀</button>
-          <button onClick={nextPage}>▶</button>
+          <button className='page-btn' onClick={prevPage}>
+            <PrevPageIcon />
+          </button>
+          <button className='page-btn' onClick={nextPage}>
+            <NextPageIcon />
+          </button>
         </div>
       </div>
     </div>

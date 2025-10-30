@@ -85,7 +85,7 @@ export function Table() {
                       <DotsIcon />
                     </button>
                     {dropMenu.show && dropMenu.taskId === task.id && (
-                      <div ref={dropRef} className='drop-container'>
+                      <div ref={dropRef} className='drop-menu-container'>
                         <Drop>
                           <p
                             onClick={() =>

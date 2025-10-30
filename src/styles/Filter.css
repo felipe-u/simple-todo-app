@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 300px;
 }
 
 .filter-btn-container,
@@ -28,11 +27,17 @@
 
 .status-btn-container {
   position: relative;
+  margin-left: 50px;
+}
+
+.status-btn {
+  display: flex;
 }
 
 .status-drop-container {
   display: block;
   position: absolute;
-  top: -20px;
-  left: 44px;
+  top: 0;
+  left: 0;
+  transform: translate(11px, 21px);
 }

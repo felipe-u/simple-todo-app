@@ -1,15 +1,35 @@
 .drop-container {
-  background-color: whitesmoke;
-  color: #222;
+  background-color: #444;
+  color: whitesmoke;
   display: flex;
   flex-direction: column;
+  border-radius: 5px;
+  width: 110px;
+  border: 1px solid #777;
+  padding: 5px 0;
 }
 
 .drop-container p {
-  padding: 5px;
+  padding: 8px;
+  margin: 0 5px;
   cursor: pointer;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.drop-container hr {
+  margin: 5px 0;
+  color: #777;
+}
+
+.drop-container p.red-p {
+  color: #ff6466;
+}
+
+.drop-container p.red-p:hover {
+  background-color: rgba(139, 0, 0, 0.182);
 }
 
 .drop-container p:hover {
-  background-color: #22222220;
+  background-color: #777;
 }

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import '../styles/Filter.css'
 import { Drop } from './Drop'
 import { useTasks } from '../hooks/useTasks'
@@ -8,6 +8,23 @@ export function Filter() {
   const [searchBar, setSearchBar] = useState({ show: false, mode: 'title' })
   const [showDrop, setShowDrop] = useState(false)
   const queryRef = useRef('')
+  const dropRef = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropRef.current && !dropRef.current.contains(e.target)) {
+        setShowDrop(false)
+      }
+    }
+
+    if (showDrop) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  })
 
   const showSearchBar = (mode) => {
     setSearchBar({ show: true, mode: mode })
@@ -61,17 +78,31 @@ export function Filter() {
       )}
 
       <div className='status-btn-container'>
-        <button className='primary-btn' onClick={toggleDrop}>
+        <button className='primary-btn status-btn' onClick={toggleDrop}>
           Status
+          <span>
+            {statusFilter && (
+              <p>
+                :{' '}
+                <strong>
+                  {statusFilter.charAt(0).toUpperCase() + statusFilter.slice(1)}
+                </strong>
+              </p>
+            )}
+          </span>
         </button>
-        {statusFilter && <p>{statusFilter}</p>}
         {showDrop && (
-          <div className='status-drop-container'>
+          <div ref={dropRef} className='status-drop-container'>
             <Drop>
               <p onClick={() => onFilterByStatus('completed')}>Completed</p>
               <p onClick={() => onFilterByStatus('pending')}>Pending</p>
               {statusFilter && (
-                <p onClick={() => onFilterByStatus('')}>Clear Filter</p>
+                <>
+                  <hr />
+                  <p className='red-p' onClick={() => onFilterByStatus('')}>
+                    Clear Filter
+                  </p>
+                </>
               )}
             </Drop>
           </div>

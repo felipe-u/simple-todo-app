@@ -92,8 +92,12 @@ export function TaskForm({
         </div>
 
         <div className='btn-container'>
-          <button>Submit</button>
-          <button type='button' onClick={() => setShowTaskForm(false)}>
+          <button className='primary-btn'>Submit</button>
+          <button
+            className='primary-btn'
+            type='button'
+            onClick={() => setShowTaskForm(false)}
+          >
             Cancel
           </button>
         </div>
