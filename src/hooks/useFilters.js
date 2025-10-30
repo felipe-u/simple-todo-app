@@ -31,10 +31,20 @@ export function useFilters(allTasks) {
     setFilteredTasks(results)
   }, [allTasks, searchFilter, statusFilter])
 
+  const onSearchTasks = (mode, query) => {
+    setSearchFilter({ mode, query })
+  }
+
+  const onFilterTasksByStatus = (status) => {
+    setStatusFilter(status)
+  }
+
   return {
     filteredTasks,
     setSearchFilter,
     setStatusFilter,
+    onSearchTasks,
+    onFilterTasksByStatus,
     statusFilter,
   }
 }

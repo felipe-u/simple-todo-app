@@ -26,5 +26,30 @@ export function usePagination(filteredTasks) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit])
 
-  return { limit, setLimit, numberOfPages, page, setPage, paginatedTasks }
+  useEffect(() => {
+    setPage(1)
+  }, [filteredTasks, setPage])
+
+  const nextPage = () => {
+    if (page < numberOfPages) {
+      setPage((prev) => prev + 1)
+    }
+  }
+
+  const prevPage = () => {
+    if (page > 1) {
+      setPage((prev) => prev - 1)
+    }
+  }
+
+  return {
+    limit,
+    setLimit,
+    numberOfPages,
+    page,
+    setPage,
+    paginatedTasks,
+    nextPage,
+    prevPage,
+  }
 }

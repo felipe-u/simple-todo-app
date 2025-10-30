@@ -12,15 +12,20 @@ export const TasksContext = createContext()
 
 export function TasksProvider({ children }) {
   const [allTasks, setAllTasks] = useState([])
-
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-
-  const { filteredTasks, setSearchFilter, setStatusFilter, statusFilter } =
+  const { filteredTasks, onSearchTasks, onFilterTasksByStatus, statusFilter } =
     useFilters(allTasks)
-
-  const { limit, setLimit, numberOfPages, page, setPage, paginatedTasks } =
-    usePagination(filteredTasks)
+  const {
+    limit,
+    setLimit,
+    numberOfPages,
+    page,
+    setPage,
+    paginatedTasks,
+    nextPage,
+    prevPage,
+  } = usePagination(filteredTasks)
 
   useEffect(() => {
     const fetchAllTasks = async () => {
@@ -36,30 +41,6 @@ export function TasksProvider({ children }) {
     }
     fetchAllTasks()
   }, [])
-
-  useEffect(() => {
-    setPage(1)
-  }, [filteredTasks, setPage])
-
-  const nextPage = () => {
-    if (page < numberOfPages) {
-      setPage((prev) => prev + 1)
-    }
-  }
-
-  const prevPage = () => {
-    if (page > 1) {
-      setPage((prev) => prev - 1)
-    }
-  }
-
-  const onSearchTasks = (mode, query) => {
-    setSearchFilter({ mode, query })
-  }
-
-  const onFilterTasksByStatus = (status) => {
-    setStatusFilter(status)
-  }
 
   const onCreateNewTask = async (form) => {
     setLoading(true)
@@ -144,6 +125,7 @@ export function TasksProvider({ children }) {
         limit,
         setLimit,
         page,
+        setPage,
         nextPage,
         prevPage,
         numberOfPages,
