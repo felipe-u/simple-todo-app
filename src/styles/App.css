@@ -7,7 +7,7 @@ main {
 }
 
 section {
-  width: 600px;
+  width: 700px;
 }
 
 .filter-sec {
@@ -26,4 +26,18 @@ section {
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 10;
+}
+
+.primary-btn {
+  border: 1px solid #444;
+  border-radius: 5px;
+  padding: 5px 10px;
+  color: whitesmoke;
+  background-color: #222;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.primary-btn:hover {
+  background-color: #333;
 }

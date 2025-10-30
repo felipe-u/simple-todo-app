@@ -1,3 +1,4 @@
+import '../styles/Pagination.css'
 import { useTasks } from '../hooks/useTasks'
 
 export function Pagination() {

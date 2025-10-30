@@ -31,11 +31,13 @@ export function Filter() {
     <div className='filter-container'>
       {searchBar.show ? (
         <div className='search-bar-container'>
-          <button onClick={hideSearchBar}>X</button>
+          <button className='primary-btn' onClick={hideSearchBar}>
+            X
+          </button>
           <input
             type='text'
             placeholder={
-              searchBar.mode === 'title' ? 'Search Task' : '123, 456...'
+              searchBar.mode === 'title' ? 'Search Task...' : '123, 456...'
             }
             ref={queryRef}
             onKeyDown={(e) =>
@@ -47,22 +49,21 @@ export function Filter() {
       ) : (
         <div className='filter-btn-container'>
           <button
-            className='secondary-btn'
+            className='primary-btn'
             onClick={() => showSearchBar('title')}
           >
             Filter By Title
           </button>
-          <button
-            className='secondary-btn'
-            onClick={() => showSearchBar('user')}
-          >
+          <button className='primary-btn' onClick={() => showSearchBar('user')}>
             Filter By User
           </button>
         </div>
       )}
 
       <div className='status-btn-container'>
-        <button onClick={toggleDrop}>Status</button>
+        <button className='primary-btn' onClick={toggleDrop}>
+          Status
+        </button>
         {statusFilter && <p>{statusFilter}</p>}
         {showDrop && (
           <div className='status-drop-container'>

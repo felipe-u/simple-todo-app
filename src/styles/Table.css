@@ -1,26 +1,69 @@
 table {
-  border: 1px solid whitesmoke;
+  border: 1px solid #333;
+  border-radius: 5px;
   width: 100%;
   text-align: left;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.pagination-container {
-  display: flex;
-  justify-content: space-around;
-  padding: 25px 0;
+th,
+td {
+  height: 45px;
+  font-size: 0.9em;
 }
 
-.rows-per-page,
-.pages {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+td {
+  border-top: 1px solid #333;
 }
 
-.pages-btn-container {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+th:nth-child(1) {
+  text-align: center;
+}
+
+td:nth-child(1) {
+  width: 8%;
+  text-align: center;
+}
+
+td:nth-child(2) {
+  width: 62%;
+}
+
+td:nth-child(3) {
+  width: 15%;
+}
+
+td:nth-child(4) {
+  width: 10%;
+}
+
+td:nth-child(5) {
+  width: 5%;
+}
+
+tr {
+  transition: background-color 0.3s ease;
+}
+
+tr:hover {
+  background-color: #222;
+}
+
+.options-btn {
+  display: grid;
+  place-items: center;
+  height: 22px;
+  width: 22px;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.options-btn:hover {
+  background-color: #444;
 }
 
 .drop-menu-td {

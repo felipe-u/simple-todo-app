@@ -3,6 +3,7 @@ import { Drop } from '../components/Drop'
 import { TaskForm } from '../components/TaskForm.jsx'
 import { useEffect, useRef, useState } from 'react'
 import { useTasks } from '../hooks/useTasks.js'
+import { DotsIcon } from './Icons.jsx'
 
 export function Table() {
   const { paginatedTasks: tasks, onDeleteTask } = useTasks()
@@ -71,12 +72,18 @@ export function Table() {
             {tasks.map((task) => (
               <tr key={task.id}>
                 <td>{task.id}</td>
-                <td>{task.todo}</td>
+                <td>
+                  {task.todo.length > 60
+                    ? `${task.todo.slice(0, 60)}...`
+                    : task.todo}
+                </td>
                 <td>{task.completed ? 'Completed' : 'Pending'}</td>
                 <td>{task.userId}</td>
                 <td>
                   <div className='drop-menu-td'>
-                    <button onClick={() => showDropMenu(task.id)}>...</button>
+                    <button className='options-btn' onClick={() => showDropMenu(task.id)}>
+                      <DotsIcon />
+                    </button>
                     {dropMenu.show && dropMenu.taskId === task.id && (
                       <div ref={dropRef} className='drop-container'>
                         <Drop>

@@ -2,7 +2,28 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 250px;
+  width: 300px;
+}
+
+.filter-btn-container,
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  width: 210px;
+  justify-content: space-between;
+}
+
+.search-bar-container input {
+  width: 175px;
+  padding: 5px 10px;
+  color: whitesmoke;
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 5px;
+}
+
+.search-bar-container input:focus {
+  outline: 1.5px solid #888;
 }
 
 .status-btn-container {
