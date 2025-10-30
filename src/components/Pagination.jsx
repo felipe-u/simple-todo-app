@@ -1,11 +1,8 @@
-export function Pagination({
-  limit,
-  setLimit,
-  numberOfPages,
-  page,
-  nextPage,
-  prevPage,
-}) {
+import { useTasks } from '../hooks/useTasks'
+
+export function Pagination() {
+  const { limit, setLimit, numberOfPages, page, nextPage, prevPage } =
+    useTasks()
   return (
     <div className='pagination-container'>
       <div className='rows-per-page'>

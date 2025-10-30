@@ -1,67 +1,33 @@
 import './styles/App.css'
 import { Filter } from './components/Filter'
 import { Table } from './components/Table'
-import { useTasks } from './hooks/useTasks'
 import { Pagination } from './components/Pagination'
 import { TaskForm } from './components/TaskForm'
 import { useState } from 'react'
 
 function App() {
-  const {
-    paginatedTasks,
-    limit,
-    setLimit,
-    numberOfPages,
-    page,
-    nextPage,
-    prevPage,
-    onSearchTasks,
-    onFilterTasksByStatus,
-    statusFilter,
-    onCreateNewTask,
-    onEditTask,
-    onDeleteTask,
-  } = useTasks()
   const [showTaskForm, setShowTaskForm] = useState(false)
 
   return (
     <main>
       <section className='filter-sec'>
-        <Filter
-          onSearchTasks={onSearchTasks}
-          onFilterTasksByStatus={onFilterTasksByStatus}
-          statusFilter={statusFilter}
-        />
+        <Filter />
         <button className='primary-btn' onClick={() => setShowTaskForm(true)}>
           New Task
         </button>
       </section>
 
       <section>
-        <Table
-          tasks={paginatedTasks}
-          onEditTask={onEditTask}
-          onDeleteTask={onDeleteTask}
-        />
+        <Table />
       </section>
 
       <section>
-        <Pagination
-          limit={limit}
-          setLimit={setLimit}
-          page={page}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          numberOfPages={numberOfPages}
-        />
+        <Pagination />
       </section>
 
       {showTaskForm && (
         <div className='task-form-modal' onClick={() => setShowTaskForm(false)}>
-          <TaskForm
-            onCreateNewTask={onCreateNewTask}
-            setShowTaskForm={setShowTaskForm}
-          />
+          <TaskForm editMode={false} setShowTaskForm={setShowTaskForm} />
         </div>
       )}
     </main>

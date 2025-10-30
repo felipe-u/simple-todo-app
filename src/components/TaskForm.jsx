@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import '../styles/TaskForm.css'
+import { useTasks } from '../hooks/useTasks'
 
 export function TaskForm({
   editMode,
   taskToEdit,
-  onCreateNewTask,
+
   setShowTaskForm,
-  onEditTask,
 }) {
   const [form, setForm] = useState({
     id: '',
@@ -14,6 +14,7 @@ export function TaskForm({
     status: 'pending',
     userId: '',
   })
+  const { onCreateNewTask, onEditTask } = useTasks()
 
   useEffect(() => {
     if (editMode) {

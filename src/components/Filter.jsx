@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react'
 import '../styles/Filter.css'
 import { Drop } from './Drop'
+import { useTasks } from '../hooks/useTasks'
 
-export function Filter({ onSearchTasks, onFilterTasksByStatus, statusFilter }) {
+export function Filter() {
+  const { onSearchTasks, onFilterTasksByStatus, statusFilter } = useTasks()
   const [searchBar, setSearchBar] = useState({ show: false, mode: 'title' })
   const [showDrop, setShowDrop] = useState(false)
   const queryRef = useRef('')

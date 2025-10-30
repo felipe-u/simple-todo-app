@@ -2,8 +2,10 @@ import '../styles/Table.css'
 import { Drop } from '../components/Drop'
 import { TaskForm } from '../components/TaskForm.jsx'
 import { useEffect, useRef, useState } from 'react'
+import { useTasks } from '../hooks/useTasks.js'
 
-export function Table({ tasks, onEditTask, onDeleteTask }) {
+export function Table() {
+  const { paginatedTasks: tasks, onDeleteTask } = useTasks()
   const [dropMenu, setDropMenu] = useState({ show: false, taskId: '' })
   const [showTaskForm, setShowTaskForm] = useState(false)
   const [taskToEdit, setTaskToEdit] = useState({
@@ -116,7 +118,6 @@ export function Table({ tasks, onEditTask, onDeleteTask }) {
             editMode={true}
             taskToEdit={taskToEdit}
             setShowTaskForm={setShowTaskForm}
-            onEditTask={onEditTask}
           />
         </div>
       )}
