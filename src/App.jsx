@@ -12,7 +12,7 @@ function App() {
     <main>
       <section className='filter-sec'>
         <Filter />
-        <button className='primary-btn' onClick={() => setShowTaskForm(true)}>
+        <button className='primary-btn new-btn' onClick={() => setShowTaskForm(true)}>
           New Task
         </button>
       </section>

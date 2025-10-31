@@ -49,7 +49,7 @@ export function Filter() {
       {searchBar.show ? (
         <div className='search-bar-container'>
           <button className='primary-btn' onClick={hideSearchBar}>
-            X
+            &times;
           </button>
           <input
             type='text'
