@@ -4,9 +4,12 @@ import { TaskForm } from '../components/TaskForm.jsx'
 import { useEffect, useRef, useState } from 'react'
 import { useTasks } from '../hooks/useTasks.js'
 import { DotsIcon } from './Icons.jsx'
+import { useTasksUI } from '../hooks/useTasksUI.js'
+import { toast } from 'sonner'
 
 export function Table() {
-  const { paginatedTasks: tasks, onDeleteTask } = useTasks()
+  const { paginatedTasks: tasks } = useTasks()
+  const { safeDeleteTask } = useTasksUI()
   const [dropMenu, setDropMenu] = useState({
     show: false,
     taskId: '',
@@ -62,10 +65,20 @@ export function Table() {
   }
 
   const handleDeleteClick = (taskId) => {
-    if (confirm('Are you sure you want to delete this task?')) {
-      onDeleteTask(taskId)
-      hideDropMenu()
-    }
+    toast('Are you sure you want to delete this task?', {
+      toasterId: 'confirm',
+      duration: Infinity,
+      action: {
+        label: 'Confirm',
+        onClick: () => {
+          safeDeleteTask(taskId)
+        },
+      },
+      cancel: {
+        label: 'Cancel',
+      },
+    })
+    hideDropMenu()
   }
 
   return (
@@ -124,7 +137,10 @@ export function Table() {
                             Edit
                           </p>
                           <hr />
-                          <p className='red-p' onClick={() => handleDeleteClick(task.id)}>
+                          <p
+                            className='red-p'
+                            onClick={() => handleDeleteClick(task.id)}
+                          >
                             Delete
                           </p>
                         </Drop>

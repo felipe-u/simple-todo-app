@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
 import '../styles/TaskForm.css'
-import { useTasks } from '../hooks/useTasks'
+import { useEffect, useState } from 'react'
+import { useTasksUI } from '../hooks/useTasksUI'
 
 export function TaskForm({
   editMode,
@@ -14,7 +14,8 @@ export function TaskForm({
     status: 'pending',
     userId: '',
   })
-  const { onCreateNewTask, onEditTask } = useTasks()
+
+  const { safeCreateTask, safeEditTask } = useTasksUI()
 
   useEffect(() => {
     if (editMode) {
@@ -32,9 +33,9 @@ export function TaskForm({
     e.preventDefault()
     if (!form.title || !form.userId) return
     if (editMode) {
-      await onEditTask(form)
+      await safeEditTask(form)
     } else {
-      await onCreateNewTask(form)
+      await safeCreateTask(form)
     }
     setForm({ id: '', title: '', status: 'pending', userId: '' })
     setShowTaskForm(false)

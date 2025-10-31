@@ -4,7 +4,6 @@ import { Table } from './components/Table'
 import { Pagination } from './components/Pagination'
 import { TaskForm } from './components/TaskForm'
 import { useState } from 'react'
-import { Loader } from './components/Loader'
 
 function App() {
   const [showTaskForm, setShowTaskForm] = useState(false)
@@ -31,8 +30,6 @@ function App() {
           <TaskForm editMode={false} setShowTaskForm={setShowTaskForm} />
         </div>
       )}
-
-      <Loader />
     </main>
   )
 }
