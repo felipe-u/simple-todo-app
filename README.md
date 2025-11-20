@@ -24,7 +24,7 @@ filters, pagination, UI state handling and a lightweight API layer.
 ## What I learned
 - State management with Context & custom hooks
 - Designing a clean component structure
-- Handling server responses + optimistic UI patterns (si aplica)
+- Handling server responses
 - Pagination logic and user experience
 
 ## How to run
